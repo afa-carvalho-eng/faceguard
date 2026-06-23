@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: faceguard-api
+    runtime: docker
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    plan: starter
+    envVars:
+      - key: PORT
+        value: "4000"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: WEB_ORIGIN
+        sync: false
+      - key: SEARCH_PROVIDER
+        value: google_vision
+      - key: GOOGLE_VISION_API_KEY
+        sync: false
+      - key: DB_PATH
+        value: /data/faceguard.sqlite
+      - key: UPLOAD_DIR
+        value: /data/uploads
+      - key: FACE_MODELS_DIR
+        value: /app/apps/api/models
+      - key: FACE_MATCH_ENABLED
+        value: "true"
+    disk:
+      name: faceguard-data
+      mountPath: /data
+      sizeGB: 1
+
+  - type: web
+    name: faceguard-web
+    runtime: docker
+    dockerfilePath: ./apps/web/Dockerfile
+    dockerContext: .
+    plan: starter
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.next/
+*.log
+.env
+.env.local
+apps/api/uploads/*
+!apps/api/uploads/.gitkeep
+apps/api/data/
+*.sqlite
+.expo/
+
+# Downloaded AI face model weights (re-fetch with: npm run fetch-models)
+apps/api/models/
+.DS_Store
